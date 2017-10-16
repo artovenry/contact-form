@@ -1,9 +1,21 @@
 <template lang="pug">
   form(novalidate)
-    field(v-bind.sync="contact.name")
+    field(v-bind.sync="contact.name" autocomplete="name")
       header(slot="header") 名前
     field(v-bind.sync="contact.kana")
       header(slot="header") ふりがな
+    field(v-bind.sync="contact.email" type="email" autocomplete="email")
+      header(slot="header") email
+    field(v-bind.sync="contact.tel" type="tel" autocomplete="tel")
+      header(slot="header") 電話番号
+    field(v-bind.sync="contact.message")
+      template(slot="control" scope="c")
+        textarea(
+          :value="c.value"
+          @input="c.input($event.target.value)"
+          @blur ="c.input($event.target.value)"
+        )
+      header(slot="header") メッセージ
     fieldset
       input(type="button" value="send" @click="submit")
 </template>
@@ -11,34 +23,15 @@
 
 <script lang="coffee">
   import Field from "./Field.vue"
-  validators= 
-    name: (value)->[
-      if value is "" then "必須入力です"
-    ]
-    kana: (value)->[
-      if value is "" then "必須入力です"
-      else if not /^[\u3041-\u3096][\u3041-\u3096\u3000\u30FB-\u30FE]+$/.test value then  "全角ひらがなで記入してください"
-    ]
-    email: (value)->[
-      if value is "" then "必須入力です"
-      else if not emailValidator.validate value then "メールアドレスの形式が無効です"
-    ]
-    tel: (value)->[
-      if value isnt  "" and not /[\d\-\+\(\)]+$/.test value
-        "電話番号は半角数字<b>「0〜9」</b>と<b>ハイフン「-」</b>,<b>括弧「()」</b>,<b>プラス「+」</b>のみ使用可能です"
-    ]
-    message: (value)->[
-      if value is "" then "必須入力です"
-    ]
+  validators=  require "./validators.coffee"
 
   export default
     components: field: Field
     data: ->
-      contact= name: {value: ""}, kana: {value: ""}, email: {value: ""}, tel: {value: ""}, message: {value: ""}
-      contact: _.mapObject contact, (item)->_.extend item,
-        errors: [], notifying: no
-
-    computed: 
+      contact_attrs= "name kana email tel message".split " "
+      contact: _.object contact_attrs, contact_attrs.map (attr)->
+        value: "", errors: [], notifying: no
+    computed:
       isValid: ->_.chain(@contact).pluck("errors").every(_.isEmpty).value()
 
     methods:
@@ -50,8 +43,7 @@
     created: ->
       _.each validators, (validator, attr)=>
         @$watch "contact.#{attr}.value", (value)->
-          @contact[attr].errors.splice 0
-          Array::push.apply @contact[attr].errors, _.compact(validator(value))
+          @contact[attr].errors= _.compact(validator(value))
         , immediate: yes
 </script>
 
