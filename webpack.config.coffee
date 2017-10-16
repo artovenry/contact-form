@@ -28,7 +28,7 @@ module.exports=
   plugins: _.compact _.flatten _.values
     Define  : new webpack.DefinePlugin
       "process.env": NODE_ENV:  JSON.stringify if env is "development" then "development" else "produtcion"
-      "SINATRA_HOST": JSON.stringify process.env.npm_config_sinatra_host ? host
+      "SINATRA_HOST": JSON.stringify process.env.npm_config_sinatra_host ? "locahost"
       "SINATRA_PORT": JSON.stringify process.env.npm_config_sinatra_port ? 9292
     Provide : new webpack.ProvidePlugin
       _: "underscore"

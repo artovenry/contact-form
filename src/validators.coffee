@@ -1,5 +1,5 @@
 import emailValidator from "email-validator"
-validators=
+export defualt
   name: (value)->[
     if value is "" then "必須入力です"
   ]
@@ -18,5 +18,3 @@ validators=
   message: (value)->[
     if value is "" then "必須入力です"
   ]
-
-export default _.mapObject validators, (item)->_.extend item, status: false

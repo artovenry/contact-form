@@ -10,9 +10,9 @@
         :disabled.prop="disabled"
         :autocomplete="autocomplete"
       )
-      ul(v-show="notify")
-        slot(name="message" :errors="errors")
-          li(v-html="item" v-for="item in errors")
+    ul(v-show="notify")
+      slot(name="message" :errors="errors")
+        li(v-html="item" v-for="item in errors")
 </template>
 <script lang="coffee">
   export default
@@ -30,11 +30,8 @@
         validator.status= _.isEmpty errors
         errors
     methods:
-      clear: ->
-        @state= off; @$emit "input", ""
-      change: (value)->
-        @$emit "input", value
-        @state= off
+      reset: ->@state= off
+      change: (value)->@state= off;@$emit "input", value
 </script>
 <style lang="scss" scoped>
   .v-enter-active, .v-leave-active{transition: all 1s}
