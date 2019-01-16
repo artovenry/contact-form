@@ -1,0 +1,21 @@
+path: wordpress
+core download:
+ locale: ja
+core config:
+ dbhost: localhost:/tmp/mysql.sock
+ dbname: contact_form_development
+ dbuser: root
+ extra-php: |
+   define( 'ART_ENV', "development");
+   define( 'ART_ASSET_HOST', '192.168.121.17');
+   define( 'ART_ASSET_PORT', 8080);
+core install:
+ title: genryou nikki
+ url: 192.168.121.137:8080
+ admin_user: user
+ admin_password: pass
+ admin_email: mail@somehost.somedomain
+server:
+  host: 192.168.121.137
+  port: 8080
+  docroot: wordpress
