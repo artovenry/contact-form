@@ -11,7 +11,6 @@
   .container{
     width: 80vw;margin: 1rem auto;
   }
-  .wpcf7{display: block;}
 </style>
 <script lang="coffee">
   export default

@@ -21,5 +21,6 @@ html(lang="ja")
   body(class=get_body_class())
     #v-app
     - the_post()
-    - the_content()
+    div(style="display:none;")
+      - the_content()
     - wp_footer()
