@@ -7,7 +7,7 @@ html(lang="ja")
 
     - $assetsPath= sprintf("http://%s:%s/node_modules/", ART_ASSET_HOST, ART_ASSET_PORT)
     link(rel="stylesheet" href="${assetsPath}bootstrap/dist/css/bootstrap-reboot.css")
-    script(src="${assetsPath}vue/dist/vue.js")
+    script(src="${assetsPath}vue/dist/vue.runtime.js")
 
     //- コンタクトフォームを含むページにのみこのコードをwp_headの前に挿入すること 
     - wpcf7_enqueue_scripts()
@@ -19,4 +19,9 @@ html(lang="ja")
     else
       - require(ART_THEME_DIR . "/__bundled__/assets.php")
   body(class=get_body_class())
-    #v-app
+    .container
+      #v-app
+      div(style="display:none;")
+        - the_post()
+        - the_content()
+    - wp_footer()

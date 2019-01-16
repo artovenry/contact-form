@@ -6,7 +6,7 @@
   "author": "artonvery <artovenry@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server  --hot"
   },
   "browserslist": [
     "> 0.5% in JP",

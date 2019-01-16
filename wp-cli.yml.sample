@@ -9,6 +9,9 @@ core config:
    define( 'ART_ENV', "development");
    define( 'ART_ASSET_HOST', '192.168.121.17');
    define( 'ART_ASSET_PORT', 8080);
+   define( 'WPCF7_LOAD_JS', false);
+   define( 'WPCF7_LOAD_CSS', false);
+   define( 'WPCF7_AUTOP', false);
 core install:
  title: title
  url: 192.168.121.137:8080
