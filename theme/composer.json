@@ -1,0 +1,17 @@
+{
+    "name": "artovenry/spannko_2",
+    "require": {
+        "pug-php/pug": "^3.2.0"
+    },
+    "authors": [
+        {
+            "name": "artovenry",
+            "email": "artovenry@gmail.com"
+        }
+    ],
+    "autoload":{
+      "psr-4":{
+        "": ["lib/", "models/"]
+      }
+    }
+}

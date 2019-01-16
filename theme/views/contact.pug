@@ -1,0 +1,22 @@
+doctype html
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+
+    - $assetsPath= sprintf("http://%s:%s/node_modules/", ART_ASSET_HOST, ART_ASSET_PORT)
+    link(rel="stylesheet" href="${assetsPath}bootstrap/dist/css/bootstrap-reboot.css")
+    script(src="${assetsPath}vue/dist/vue.js")
+
+    //- コンタクトフォームを含むページにのみこのコードをwp_headの前に挿入すること 
+    - wpcf7_enqueue_scripts()
+    - wpcf7_enqueue_styles()
+
+    - wp_head()
+    if ART_ENV === "development"
+      - require sprintf("http://%s:%s/assets.php", ART_ASSET_HOST, ART_ASSET_PORT)
+    else
+      - require(ART_THEME_DIR . "/__bundled__/assets.php")
+  body(class=get_body_class())
+    #v-app

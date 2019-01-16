@@ -10,7 +10,7 @@ core config:
    define( 'ART_ASSET_HOST', '192.168.121.17');
    define( 'ART_ASSET_PORT', 8080);
 core install:
- title: genryou nikki
+ title: title
  url: 192.168.121.137:8080
  admin_user: user
  admin_password: pass

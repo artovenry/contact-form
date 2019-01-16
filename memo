@@ -1,1 +1,17 @@
 EmailValidator
+
+instruction for setting up wp development environment:
+
+wp core download
+wp core config
+wp core install
+wp plugin install contact-form-7 --activate
+このあと、管理画面で翻訳を最新に更新（wp core language updateではうまく更新されなかった。）
+wp plugin deactivate contact-form-7
+wp plugin uninstall contact-form-7
+wp plugin install contact-form-7  --activate
+
+-----------------------------------------
+
+
+        //- 注意：このrowはjustify-content-md-centerなので、直下にmx-autoを置けない（IE11でレイアウトがずれる）
