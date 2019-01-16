@@ -19,9 +19,7 @@ html(lang="ja")
     else
       - require(ART_THEME_DIR . "/__bundled__/assets.php")
   body(class=get_body_class())
-    .container
-      #v-app
-      div(style="display:none;")
-        - the_post()
-        - the_content()
+    #v-app
+    - the_post()
+    - the_content()
     - wp_footer()
