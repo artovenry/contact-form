@@ -94,4 +94,5 @@ module.exports=
     VUE: new VueLoaderPlugin
     HWP: [
       new HtmlWebpackPlugin template: "src/assets.php.ejs", inject: off, filename: "assets.php"
+      new HtmlWebpackPlugin template: "src/design.pug", inject: off, filename: "design.html", host: host, port: port
     ]

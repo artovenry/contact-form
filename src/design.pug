@@ -1,0 +1,15 @@
+doctype html
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    - var hwp= htmlWebpackPlugin
+    - var host= hwp.options.host, port= hwp.options.port
+    link(rel="stylesheet" href=`http://${host}:${port}/node_modules/bootstrap/dist/css/bootstrap-reboot.css`)
+    script(src=`http://${host}:${port}/node_modules/vue/dist/vue.js`)
+    script(src=`http://${host}:${port}/node_modules/jquery/dist/jquery.js`)
+    script(src=hwp.files.chunks.style.entry)
+    script(src=hwp.files.chunks.script.entry)
+  body
+    #v-app
