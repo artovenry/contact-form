@@ -1,9 +1,14 @@
 <template lang="pug">
- #main
-   .container
-     //- autocomplete属性を使うためにはname属性が必要かな
+#main
+  //- autocomplete属性を使うためにはname属性が必要かな
+  .container
+    TextControl(
+      for="namae"
+      label="名前"
+      :attrs="{name:'full_name', autocomplete:'name'}"
+    )
      label(for="control-namae") 名前
-     input#control-namae(type="text"   v-model="attrs.namae"  name="full_name" autocomplete="name"  @blur="blr($event.target.value)")
+     input#control-namae(type="text"   v-model="attrs.namae"  name="full_name" autocomplete="name"  @blur="taint($event.target.value)")
      .error(v-show="errors.namae !== ''  && tainted === true"  v-html="errors.namae")
 
      label(for="control-furigana") ふりがな
@@ -43,25 +48,23 @@
 </style>
 <script lang="coffee">
   import checkers from "./checkers"
+  import TextControl from "./TextControl"
   attrs=
     namae: "", furigana: "", email: "", tel: "", yuubin: "", address: "", subject: "", message: ""
   errors= _.mapObject attrs, (item)->""
-  tainted= no
+  tainted= _.mapObject attrs, (item)->no
   watcher= _.inject _.keys(attrs), (memo, key)->
-    _.extend memo,
-      "attrs.#{key}":
-        immediate: on
-        handler: (val)->@errors[key]= validators[key](val) ? ''
+    _.extend memo,"attrs.#{key}": {immediate: on, handler: (val)->@errors[key]= checkers[key](val) ? ''}
   , {}
   export default
     data: ->{attrs, errors, tainted}
+    components:
+      TextControl:
+
     computed:
       # ready: ->@tainted and _.every @errors,(item)->item is ""
       ready: ->yes
-    watch:
-      "attrs.namae":
-        immediate: on
-        handler: (val)->@errors.namae= checkers.namae(val) ? ""
+    watch: watcher
     methods:
       blr: (val)->
         return if @tainted
