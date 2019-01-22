@@ -2,81 +2,97 @@
 #main
   //- autocomplete属性を使うためにはname属性が必要かな
   .container
-    TextControl#text-control-namae(
-      label="名前"
-      :value.sync="attrs.namae"
-      :error="errorFor('namae')"
-      :controlAttrs="{id:'control-namae', name:'full_name', autocomplete:'name'}"
-    )
-    TextControl#text-control-furigana(
-      label="ふりがな"
-      :value.sync="attrs.furigana"
-      :error="errorFor('furigana')"
-      :controlAttrs="{id:'furigana'}"
-    )
-    TextControl#text-control-email(
-      label="メールアドレス"
-      :value.sync="attrs.email"
-      :error="errorFor('email')"
-      :controlAttrs="{type:'email', id:'control-email', name:'email', autocomplete:'email'}"
-    )
-    TextControl#text-control-tel(
-      label="電話番号"
-      :value.sync="attrs.tel"
-      :error="errorFor('tel')"
-      :controlAttrs="{type:'tel', id:'control-tel', name:'tel', autocomplete:'tel'}"
-    )
-    TextControl#text-control-yuubin(
-      label="郵便番号"
-      :value.sync="attrs.yuubin"
-      :error="errorFor('yuubin')"
-      :controlAttrs="{id:'control-yuubin', name:'postal-code', autocomplete:'postal-code'}"
-    )
-    TextControl#text-control-address(
-      label="住所"
-      :value.sync="attrs.address"
-      :error="errorFor('address')"
-      :controlAttrs="{id:'control-address', name:'address'}"
-    )
-    TextControl#text-control-subject(
-      label="タイトル"
-      :value.sync="attrs.subject"
-      :error="errorFor('subject')"
-      :controlAttrs="{id:'control-subject', name:'subject'}"
-    )
-    TextAreaControl#textarea-control-message(
-      label="メッセージ"
-      :value.sync="attrs.message"
-      :error="errorFor('message')"
-      :controlAttrs="{id:'control-message', name:'message'}"
-    )
+    #cf7-controls
 
-     input(type="submit" value="submit"   :disabled="!ready"  @click="send")
+      TextControl.control-namae(
+        label="名前"
+        :value.sync="attrs.namae"
+        :error="errors.namae"
+        :controlAttrs="{id:'control-namae', name:'full_name', autocomplete:'name'}"
+      )
+      TextControl.control-furigana(
+        label="ふりがな"
+        :value.sync="attrs.furigana"
+        :error="errors.furigana"
+        :controlAttrs="{id:'furigana'}"
+      )
+      TextControl.control-email(
+        label="メールアドレス"
+        :value.sync="attrs.email"
+        :error="errors.email"
+        :controlAttrs="{type:'email', id:'control-email', name:'email', autocomplete:'email'}"
+      )
+      TextControl.control-tel(
+        label="電話番号"
+        :value.sync="attrs.tel"
+        :error="errors.tel"
+        :controlAttrs="{type:'tel', id:'control-tel', name:'tel', autocomplete:'tel'}"
+      )
+      TextControl.control-yuubin(
+        label="郵便番号"
+        :value.sync="attrs.yuubin"
+        :error="errors.yuubin"
+        :controlAttrs="{id:'control-yuubin', name:'postal-code', autocomplete:'postal-code'}"
+      )
+      TextControl.control-address(
+        label="住所"
+        :value.sync="attrs.address"
+        :error="errors.address"
+        :controlAttrs="{id:'control-address', name:'address'}"
+      )
+      TextControl.control-subject(
+        label="タイトル"
+        :value.sync="attrs.subject"
+        :error="errors.subject"
+        :controlAttrs="{id:'control-subject', name:'subject'}"
+      )
+      TextAreaControl.control-message(
+        label="メッセージ"
+        :value.sync="attrs.message"
+        :error="errors.message"
+        :controlAttrs="{id:'control-message', name:'message'}"
+      )
+      input(type="submit" value="submit"  @click="send")
 </template>
-<style lang="scss" scoped>
-  .container{width: 80vw;margin: 1rem auto;}
+<style lang="scss">
+  .container{width: 80vw;margin: 3rem auto;}
   .error{color: red;font-size: 80%;}
+  #cf7-controls{
+    font-size: 0.8rem;
+    font-family: (ヒラギノ角ゴ ProN, Hiragino Kaku Gothic ProN, メイリオ, Meiryo, ＭＳ Ｐゴシック, Helvetica Neue, Helvetica, Arial, Roboto, Droid Sans, sans-serif),;
+    display: flex;
+    flex-flow: column nowrap;
+    input{
+      border: 0;
+      border-bottom: 1px dotted black;
+    }
+    .control{
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: baseline;
+      // border-bottom: 1px dotted black;
+      > :last-child{
+        margin-left: 2rem;
+        flex: auto;
+        display: inline-flex;
+        flex-flow: column;
+        >:first-child{flex:auto;}
+      }
+      &:not(:last-of-type){margin-bottom: 1.5rem;}
+    }
+  }
 </style>
 <script lang="coffee">
   import checkers from "./checkers"
-  import {TextControl, TextAreaControl} from "./InputControl"
+  import {TextControl, TextAreaControl} from "./Control"
 
-  # attrs=
-  #   namae: "", furigana: "", email: "", tel: "", yuubin: "", address: "", subject: "", message: ""
-  # errors= _.mapObject attrs, (item)->""
-  # tainted= _.mapObject attrs, (item)->no
-
-  # watcher= _.inject _.keys(attrs), (memo, key)->
-  #   _.extend memo,"attrs.#{key}": {immediate: on, handler: (val)->@errors[key]= checkers[key](val) ? ''}
-  # , {}
   export default
-    # data: ->{attrs, errors, tainted}
-    components: {TextControl}
-    data: ->attrs: namae: "", furigana: ""
+    components: {TextControl, TextAreaControl}
+    data: ->attrs: namae: "山田　ウィリアムス　ジェイソン", furigana: "", email: "", tel: "", yuubin: "", address: "", subject: "", message: ""
     computed:
-      ready: ->_.every _.keys(@attrs), (key)=>@errorFor(key)?
+      ready: ->_.every @errors, (item)->not item?
+      errors: ->_.mapObject @attrs, (val, attr)->checkers[attr](val) ? '&nbsp;'
     methods:
-      errorFor: (attr)->checkers[attr](@$data.attrs[attr])
       send: -> do($=jQuery)=>
         # $("#cf7-namae").val @namae
         # $("#cf7-email").val @email
