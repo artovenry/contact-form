@@ -3,19 +3,21 @@
   //- autocomplete属性を使うためにはname属性が必要かな
   .container
     #cf7-controls
-
-      TextControl.control-namae(
-        label="名前"
-        :value.sync="attrs.namae"
-        :error="errors.namae"
-        :controlAttrs="{id:'control-namae', name:'full_name', autocomplete:'name'}"
-      )
-      TextControl.control-furigana(
-        label="ふりがな"
-        :value.sync="attrs.furigana"
-        :error="errors.furigana"
-        :controlAttrs="{id:'furigana'}"
-      )
+      div(style="display:flex;flex-flow:row;")
+        TextControl.control-namae(
+          style="flex:1 1 40%; margin-right: 2rem;"
+          label="名前"
+          :value.sync="attrs.namae"
+          :error="errors.namae"
+          :controlAttrs="{id:'control-namae', name:'full_name', autocomplete:'name'}"
+        )
+        TextControl.control-furigana(
+          style="flex:1 1 60%"
+          label="ふりがな"
+          :value.sync="attrs.furigana"
+          :error="errors.furigana"
+          :controlAttrs="{id:'furigana'}"
+        )
       TextControl.control-email(
         label="メールアドレス"
         :value.sync="attrs.email"
@@ -55,7 +57,7 @@
       input(type="submit" value="submit"  @click="send")
 </template>
 <style lang="scss">
-  .container{width: 80vw;margin: 3rem auto;}
+  .container{width: 70vw;margin: 5rem auto;}
   .error{color: red;font-size: 80%;}
   #cf7-controls{
     font-size: 0.8rem;
@@ -66,19 +68,20 @@
       border: 0;
       border-bottom: 1px dotted black;
     }
+    >*{
+      &:not(:last-of-type){margin-bottom: 1.5rem;}
+    }
     .control{
       display: flex;
       flex-flow: row nowrap;
       align-items: baseline;
-      // border-bottom: 1px dotted black;
       > :last-child{
-        margin-left: 2rem;
+        margin-left: 1rem;
         flex: auto;
         display: inline-flex;
         flex-flow: column;
         >:first-child{flex:auto;}
       }
-      &:not(:last-of-type){margin-bottom: 1.5rem;}
     }
   }
 </style>
@@ -88,7 +91,7 @@
 
   export default
     components: {TextControl, TextAreaControl}
-    data: ->attrs: namae: "山田　ウィリアムス　ジェイソン", furigana: "", email: "", tel: "", yuubin: "", address: "", subject: "", message: ""
+    data: ->attrs: namae: "", furigana: "", email: "", tel: "", yuubin: "", address: "", subject: "", message: ""
     computed:
       ready: ->_.every @errors, (item)->not item?
       errors: ->_.mapObject @attrs, (val, attr)->checkers[attr](val) ? '&nbsp;'
