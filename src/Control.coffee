@@ -1,19 +1,21 @@
 Control=
+  functional: on
   props: ["tag", "attrs", "value"]
-  render: (h)->
-    switch @tag
+  render: (h, context)->
+    {tag, attrs, value}= context.props
+    switch tag
       when 'input'
-        attrs= _.defaults @attrs, type: 'text'
+        attrs= _.defaults attrs, type: 'text'
         style= """
           border: 0;
           border-bottom: 1px dotted black;
         """
       when 'textarea'
-        attrs= @attrs
+        attrs= attrs
         style= """
           border: 1px dotted black;
         """
-    h @tag, {attrs: attrs, style: style, domProps: {value: @value}, on: @$listeners}
+    h tag, {attrs: attrs, style: style, domProps: {value: value}, on: context.listeners}
 
 BaseComponent=
   inheritAttrs: off
