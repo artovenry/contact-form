@@ -17,10 +17,13 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@babel/plugin-syntax-jsx": "^7.2.0",
     "@babel/preset-env": "^7.1.0",
     "autoprefixer": "^9.1.5",
     "babel": "^6.23.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^8.0.2",
+    "babel-plugin-transform-vue-jsx": "4",
     "bootstrap": "^4.2.1",
     "coffee-loader": "^0.9.0",
     "coffeescript": "^2.3.1",

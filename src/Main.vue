@@ -64,25 +64,7 @@
     font-family: (ヒラギノ角ゴ ProN, Hiragino Kaku Gothic ProN, メイリオ, Meiryo, ＭＳ Ｐゴシック, Helvetica Neue, Helvetica, Arial, Roboto, Droid Sans, sans-serif),;
     display: flex;
     flex-flow: column nowrap;
-    input{
-      border: 0;
-      border-bottom: 1px dotted black;
-    }
-    >*{
-      &:not(:last-of-type){margin-bottom: 1.5rem;}
-    }
-    .control{
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: baseline;
-      > :last-child{
-        margin-left: 1rem;
-        flex: auto;
-        display: inline-flex;
-        flex-flow: column;
-        >:first-child{flex:auto;}
-      }
-    }
+    >*:not(:last-of-type){margin-bottom: 1.5rem;}
   }
 </style>
 <script lang="coffee">
@@ -94,7 +76,8 @@
     data: ->attrs: namae: "", furigana: "", email: "", tel: "", yuubin: "", address: "", subject: "", message: ""
     computed:
       ready: ->_.every @errors, (item)->not item?
-      errors: ->_.mapObject @attrs, (val, attr)->checkers[attr](val) ? '&nbsp;'
+      # errors: ->_.mapObject @attrs, (val, attr)->checkers[attr](val) ? '&nbsp;'
+      errors: ->_.mapObject @attrs, (val, attr)->checkers[attr](val)
     methods:
       send: -> do($=jQuery)=>
         # $("#cf7-namae").val @namae

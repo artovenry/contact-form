@@ -48,7 +48,7 @@ module.exports=
               includePaths: [path.resolve("src/sass")]
               indentedSyntax: opts.indented
               sourceMap: on
-      babelLoader=  loader: "babel-loader", options: presets: ["@babel/env"]
+      babelLoader=  loader: "babel-loader", options: presets: ["@babel/env"], plugins: ["transform-vue-jsx"]
       _.values
         JS:
           test: /\.js$/, use: [babelLoader], exclude: /node_modules/
