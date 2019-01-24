@@ -19,6 +19,7 @@
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-jsx": "^7.2.0",
     "@babel/preset-env": "^7.1.0",
+    "@tweenjs/tween.js": "^17.2.0",
     "autoprefixer": "^9.1.5",
     "babel": "^6.23.0",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",

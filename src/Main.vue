@@ -2,11 +2,12 @@
 #main
   //- autocomplete属性を使うためにはname属性が必要かな
   .container
-    #cf7-controls
+    .cf7-controls
       div(style="display:flex;flex-flow:row;")
         TextControl.control-namae(
           style="flex:1 1 40%; margin-right: 2rem;"
           label="名前"
+          :blank="false"
           :value.sync="attrs.namae"
           :error="errors.namae"
           :controlAttrs="{id:'control-namae', name:'full_name', autocomplete:'name'}"
@@ -14,18 +15,21 @@
         TextControl.control-furigana(
           style="flex:1 1 60%"
           label="ふりがな"
+          :blank="false"
           :value.sync="attrs.furigana"
           :error="errors.furigana"
           :controlAttrs="{id:'furigana'}"
         )
       TextControl.control-email(
         label="メールアドレス"
+        :blank="false"
         :value.sync="attrs.email"
         :error="errors.email"
         :controlAttrs="{type:'email', id:'control-email', name:'email', autocomplete:'email'}"
       )
       TextControl.control-tel(
         label="電話番号"
+        :blank="false"
         :value.sync="attrs.tel"
         :error="errors.tel"
         :controlAttrs="{type:'tel', id:'control-tel', name:'tel', autocomplete:'tel'}"
@@ -50,22 +54,24 @@
       )
       TextAreaControl.control-message(
         label="メッセージ"
+        :blank="false"
         :value.sync="attrs.message"
         :error="errors.message"
         :controlAttrs="{id:'control-message', name:'message'}"
       )
-      input(type="submit" value="submit"  @click="send")
+      input( type="submit" value="submit"  @click="send")
 </template>
 <style lang="scss">
-  .container{width: 70vw;margin: 5rem auto;}
-  .error{color: red;font-size: 80%;}
-  #cf7-controls{
-    font-size: 0.8rem;
-    font-family: (ヒラギノ角ゴ ProN, Hiragino Kaku Gothic ProN, メイリオ, Meiryo, ＭＳ Ｐゴシック, Helvetica Neue, Helvetica, Arial, Roboto, Droid Sans, sans-serif),;
-    display: flex;
-    flex-flow: column nowrap;
-    >*:not(:last-of-type){margin-bottom: 1.5rem;}
-  }
+  #main
+    .container{width: 70vw;margin: 5rem auto;}
+    .control-error{color: red;font-size: 80%;}
+    .cf7-controls{
+      font-size: 0.8rem;
+      font-family: (ヒラギノ角ゴ ProN, Hiragino Kaku Gothic ProN, メイリオ, Meiryo, ＭＳ Ｐゴシック, Helvetica Neue, Helvetica, Arial, Roboto, Droid Sans, sans-serif),;
+      display: flex;
+      flex-flow: column nowrap;
+      >*:not(:last-of-type){margin-bottom: 1.5rem;}
+    }
 </style>
 <script lang="coffee">
   import checkers from "./checkers"
